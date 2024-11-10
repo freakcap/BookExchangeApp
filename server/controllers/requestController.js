@@ -1,4 +1,3 @@
-// server/controllers/requestController.js
 const Request = require('../models/Request');
 const Book = require('../models/Book');
 

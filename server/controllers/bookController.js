@@ -1,4 +1,3 @@
-// server/controllers/bookController.js
 const Book = require('../models/Book');
 const User = require('../models/User');
 
@@ -15,7 +14,7 @@ exports.getAllAvailableBooks = async (req, res) => {
 exports.addBook = async (req, res) => {
   try {
     const { title, author, description } = req.body;
-    const userId = req.user.id; // Ensure user ID is extracted from the authenticated token
+    const userId = req.user.id; // Ensure user ID is extracted from the authenticated token (suthMiddleware)
 
     // Create a new book entry
     const newBook = new Book({
@@ -33,7 +32,7 @@ exports.addBook = async (req, res) => {
     await User.findByIdAndUpdate(
       userId,
       { $push: { booksOwned: savedBook._id } },
-      { new: true } // Returns the updated document
+      { new: true } 
     );
 
     res.status(201).json({ message: 'Book added successfully', book: savedBook });
