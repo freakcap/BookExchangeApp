@@ -6,16 +6,13 @@ exports.register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    // Check if the user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ error: 'User already exists' });
     }
 
-    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create a new user
     const newUser = new User({ name, email, password: hashedPassword });
     await newUser.save();
 
@@ -31,15 +28,18 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Check if the user exists
+    console.log("Recieved req for ", email);
+
     const user = await User.findOne({ email });
     if (!user) {
+      console.log("invalid creds");
       return res.status(400).json({ error: 'Invalid credentials' });
     }
 
-    // Check if the password is correct
+
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
+      console.log("invalid creds1");
       return res.status(400).json({ error: 'Invalid credentials' });
     }
 

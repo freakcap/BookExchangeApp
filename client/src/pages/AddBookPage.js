@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import '../styles/AddBookPage.css';
+import apiService from '../services/apiService';
 
 const AddBookPage = () => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
+  const [isin, setIsin] = useState('');
   const [description, setDescription] = useState('');
 
   const handleAddBook = async (e) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem('token');
-      await axios.post('/api/books/add', { title, author, description }, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await apiService.addBook({ title, author, isin, description });
       alert('Book added successfully');
       window.location.href = '/'; // Redirect to main page
     } catch (error) {
@@ -37,6 +35,13 @@ const AddBookPage = () => {
           placeholder="Author"
           value={author}
           onChange={(e) => setAuthor(e.target.value)}
+          required
+        />
+        <input
+          type="text"
+          placeholder="ISIN"
+          value={isin}
+          onChange={(e) => setIsin(e.target.value)}
           required
         />
         <textarea

@@ -1,15 +1,16 @@
 .login-container {
     max-width: 400px;
     margin: auto;
-    padding: 20px;
+    padding: 40px;
     border: 1px solid #ddd;
     border-radius: 8px;
     background-color: #f9f9f9;
+    margin-top: 10%;
   }
   
   .login-form input {
     display: block;
-    width: 100%;
+    width: 95%;
     margin-bottom: 15px;
     padding: 8px;
     border: 1px solid #ccc;
@@ -28,5 +29,15 @@
   
   .login-form button:hover {
     background-color: #0056b3;
+  }
+
+  .link{
+    color: #007bff; 
+    text-decoration: underline; 
+    cursor: pointer; 
+  }
+  
+  .link:hover {
+    color: #0056b3; 
   }
   

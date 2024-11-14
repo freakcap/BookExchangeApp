@@ -12,7 +12,6 @@ exports.requestBook = async (req, res) => {
       return res.status(400).json({ error: 'Book is not available' });
     }
 
-    // Create a new request
     const newRequest = new Request({
       book: bookId,
       requester: userId,

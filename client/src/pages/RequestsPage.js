@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import '../styles/RequestsPage.css';
+import apiService from '../services/apiService';
 
 const RequestsPage = () => {
   const [requests, setRequests] = useState([]);
 
   useEffect(() => {
     const fetchRequests = async () => {
-      const token = localStorage.getItem('token');
-      const response = await axios.get('/api/requests/user-requests', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await apiService.fetchUserRequests();
       setRequests(response.data.requests);
     };
     fetchRequests();

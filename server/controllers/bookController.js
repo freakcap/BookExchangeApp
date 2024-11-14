@@ -13,19 +13,18 @@ exports.getAllAvailableBooks = async (req, res) => {
 
 exports.addBook = async (req, res) => {
   try {
-    const { title, author, description } = req.body;
-    const userId = req.user.id; // Ensure user ID is extracted from the authenticated token (suthMiddleware)
+    const { title, author, isin, description } = req.body;
+    const userId = req.user.id; 
 
-    // Create a new book entry
     const newBook = new Book({
       title,
       author,
+      isin,
       description,
       owner: userId,
       available: true,
     });
 
-    // Save the new book to the database
     const savedBook = await newBook.save();
 
     // Find the user by ID and update their booksOwned array

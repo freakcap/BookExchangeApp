@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
-import {loginUser, setAuthToken} from '../services/apiService'
+import apiService from '../services/apiService'
 import '../styles/LoginPage.css';
-import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = async () => {
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    console.log("dfsdf")
     try {
       const credentials = {"email": username, "password": password};
       console.log(credentials);
-      const response = await axios.post(`http:localhost:8000/api/auth/login`, credentials);
+      localStorage.setItem('test',"huha");
+      const response = await apiService.loginUser(credentials);
       const token = response.data.token;
       localStorage.setItem('token', token);
-      setAuthToken(token);
       console.log("login success ", token);
-      // window.location.href = '/'; // Redirect to the main page
+      window.location.href = '/'; // Redirect to the main page
     } catch (error) {
       console.error('Login failed:', error);
       alert('Login failed');
@@ -43,6 +45,9 @@ const LoginPage = () => {
         />
         <button type="submit">Login</button>
       </form>
+      <p className="signup-note">
+        If you are a new user, please <Link className="link" to="/register">sign up here</Link>.
+      </p>
     </div>
   );
 };
