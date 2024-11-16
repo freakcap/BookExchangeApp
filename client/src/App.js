@@ -3,12 +3,13 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import MainPage from './pages/MainPage';
-import AddBookPage from './pages/AddBookPage';
+import AddBookPage from './components/AddBookForm';
 import RequestsPage from './pages/RequestsPage';
 import MyRequestsPage from './pages/MyRequestsPage';
 import AuthRoute from './pages/AuthRoute'; 
 import './App.css';
 import Header from './components/Header';
+import MyBooksPage from './pages/MyBooksPage';
 
 function App() {
   return (
@@ -29,14 +30,6 @@ function App() {
             }
           />
           <Route
-            path="/add-book"
-            element={
-              <AuthRoute>
-                <AddBookPage />
-              </AuthRoute>
-            }
-          />
-          <Route
             path="/requests"
             element={
               <AuthRoute>
@@ -49,6 +42,14 @@ function App() {
             element={
               <AuthRoute>
                 <MyRequestsPage />
+              </AuthRoute>
+            }
+          />
+           <Route
+            path="/my-books"
+            element={
+              <AuthRoute>
+                <MyBooksPage />
               </AuthRoute>
             }
           />

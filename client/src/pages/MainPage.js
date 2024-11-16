@@ -5,6 +5,7 @@ import apiService from '../services/apiService';
 const MainPage = () => {
   const [books, setBooks] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [searchCriterion, setSearchCriterion] = useState('all');
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -13,6 +14,10 @@ const MainPage = () => {
     };
     fetchBooks();
   }, []);
+
+  const handleCriterionChange = (e) => {
+    setSearchCriterion(e.target.value);
+  };
 
   const handleRequestBook = async (bookId) => {
     try {
@@ -27,16 +32,27 @@ const MainPage = () => {
     setSearchTerm(event.target.value);
   };
 
-  const filteredBooks = searchTerm == '' ? books : books.filter((book) =>
-    book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  book.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  book.isin.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredBooks = searchTerm == '' ? books : books.filter((book) => {
+    console.log(book);
+      if(searchCriterion == "all") {
+        return book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        book.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        book.isin.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        book.owner.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        book.description.toLowerCase().includes(searchTerm.toLowerCase()) ;
+      } else if(searchCriterion == "owner") {
+        return book.owner.name.toLowerCase().includes(searchTerm.toLowerCase());
+      }
+      else {
+        return book[`${searchCriterion}`].toLowerCase()
+      .includes(searchTerm.toLowerCase());
+      }
+    }
   );
 
   return (
     <div className="main-page">
       <h2>Available Books</h2>
-      <button className="add-book-button" onClick={() => window.location.href = '/add-book'}>Add Book</button>
       &nbsp;
       <input
         type="text"
@@ -45,6 +61,19 @@ const MainPage = () => {
         onChange={handleSearchChange}
         className="search-bar"
       />
+      &nbsp;
+      <select
+          value={searchCriterion}
+          onChange={handleCriterionChange}
+          className="search-criterion-dropdown"
+        >
+          <option value="title">Title</option>
+          <option value="author">Author</option>
+          <option value="isin">ISIN</option>
+          <option value="owner">Owner</option>
+          <option value="description">Description</option>
+          <option value="all">All</option>
+        </select>
       <div className="books-container">
         {filteredBooks && filteredBooks.length > 0 && filteredBooks.map(book => (
           <div className="book-card" key={book._id}>

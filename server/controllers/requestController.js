@@ -77,9 +77,7 @@ exports.getAllUserRequests = async (req, res) => {
     const userId = req.user.id; // Get user ID from authentication middleware
 
     // Fetch all requests where the user is the requester or the owner
-    const requests = await Request.find({
-      $or: [{ requester: userId }, { owner: userId }]
-    })
+    const requests = await Request.find({ requester: userId})
     .populate('book')
     .populate('requester', 'username') // Populate only relevant fields
     .populate('owner', 'username');

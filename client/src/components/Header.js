@@ -25,6 +25,9 @@ const Header = () => {
         <NavLink exact to="/" activeClassName="active-tab" className="nav-tab">
           Home
         </NavLink>
+        <NavLink to="/my-books" activeClassName="active-tab" className="nav-tab">
+          My Books
+        </NavLink>
         <NavLink to="/my-requests" activeClassName="active-tab" className="nav-tab">
           Requests
         </NavLink>

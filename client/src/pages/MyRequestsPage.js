@@ -15,7 +15,13 @@ const MyRequestsPage = () => {
 
   const handleRespond = async (requestId, action) => {
     try {
-      await apiService.respondToRequest({ requestId, action });
+      let status = '';
+      if(action == "accept"){
+        status = "Approved";
+      } else{
+        status = "Rejected";
+      }
+      await apiService.respondToRequest({ requestId, status: status });
       alert(`Request ${action}ed successfully`);
       window.location.reload(); // Refresh page to show updated status
     } catch (error) {

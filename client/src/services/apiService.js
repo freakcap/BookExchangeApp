@@ -17,9 +17,24 @@ export const fetchBooks = async () => {
   return await axiosInstance.get(`${API_BASE_URL}/books/available`);
 };
 
+// Fetch owned books
+export const fetchOwnedBooks = async () => {
+  return await axiosInstance.get(`${API_BASE_URL}/books/owned`);
+};
+
 // Add new book
 export const addBook = async (bookData) => {
   return await axiosInstance.post(`${API_BASE_URL}/books/add`, bookData);
+};
+
+// Add new book
+export const editBook = async (updateBookData) => {
+  return await axiosInstance.patch(`${API_BASE_URL}/books/update`, updateBookData);
+};
+
+// Delete a book
+export const deleteBook = async (bookId) => {
+  return await axiosInstance.delete(`${API_BASE_URL}/books/delete/${bookId}`);
 };
 
 // Fetch user's requests
@@ -33,8 +48,8 @@ export const fetchOwnerRequests = async () => {
 };
 
 // Respond to a request (accept/decline)
-export const respondToRequest = async (requestId, action) => {
-  return await axiosInstance.patch(`${API_BASE_URL}/requests/update`, { requestId, action });
+export const respondToRequest = async (updatedRequest) => {
+  return await axiosInstance.patch(`${API_BASE_URL}/requests/update`, updatedRequest);
 };
 
 // Create new request
@@ -51,4 +66,7 @@ export default {
   fetchOwnerRequests,
   respondToRequest,
   requestBook,
+  fetchOwnedBooks,
+  editBook,
+  deleteBook
 };

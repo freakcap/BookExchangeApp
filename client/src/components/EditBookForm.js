@@ -2,27 +2,30 @@ import React, { useState } from 'react';
 import '../styles/AddBookPage.css';
 import apiService from '../services/apiService';
 
-const AddBookPage = () => {
-  const [title, setTitle] = useState('');
-  const [author, setAuthor] = useState('');
-  const [isin, setIsin] = useState('');
-  const [description, setDescription] = useState('');
+const EditBookForm = ({ book }) => {
+  
+  const [title, setTitle] = useState(book.title || '');
+  const [author, setAuthor] = useState(book.author || '');
+  const [isin, setIsin] = useState(book.isin || '');
+  const [description, setDescription] = useState(book.description || '');
+  const bookId = book._id;
 
-  const handleAddBook = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await apiService.addBook({ title, author, isin, description });
-      alert('Book added successfully');
-      window.location.href = '/'; // Redirect to main page
+      await apiService.editBook({ bookId, title, author, isin, description });
+      alert('Book updated successfully');
+      window.location.href = '/my-books'; 
     } catch (error) {
       alert('Failed to add book');
+      window.location.href = '/my-books'; 
     }
   };
 
   return (
     <div className="add-book-container">
-      <h2>Add Book</h2>
-      <form onSubmit={handleAddBook} className="add-book-form">
+      <h2>Edit Book</h2>
+      <form onSubmit={handleSubmit} className="add-book-form">
         <input
           type="text"
           placeholder="Title"
@@ -50,10 +53,11 @@ const AddBookPage = () => {
           onChange={(e) => setDescription(e.target.value)}
           required
         ></textarea>
-        <button type="submit">Add Book</button>
+        <button type="submit">Edit Book</button>
       </form>
     </div>
   );
 };
 
-export default AddBookPage;
+export default EditBookForm;
+
